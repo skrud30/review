@@ -1,17 +1,22 @@
 
                         <!-- 이 곳에 게시판 글을 쓸 수 있는 form을 만드세요 -->
                         <!-- textarea와 파일 첨부를 할 수 있도록 하면 됩니다! --> 
+                        <div>
                         
                         
-                        
-                        
-                        
+                        <%= form_tag("/p_create", method: "post", multipart: true) do %>
+                            <%= text_area_tag 'content' %>
+                            <%= file_field_tag 'image', accept: 'image/*' %><br>
+                            <%= submit_tag "완료" %>
+                        <% end %>
                         
                         <!-- 이 곳에 게시판 글을 쓸 수 있는 form을 만드세요 끝!-->
                         </div>
                         
                         
                     <!-- 이 곳에 게시글과 댓글을 출력하는 내용을 입력하세요 -->
+                      
+                      
                       
                     <div class="panel panel-default">
                         <div class="panel-heading">
@@ -20,18 +25,33 @@
                         <div class="panel-body">
                             <%# 내용 출력 및 이미지가 있다면 이미지 출력 %> 
                             
+                        <% @posts.each do |p| %>
+                          <%= image_tag(p.image.url, :width => 493) %>
+                          <br>
+                          <%= p.content %>
+                          <hr>
+                              
                             
                             <%# 내용 출력 및 이미지가 있다면 이미지 출력%> 
 
                             <!-- 댓글을 작성할 수 있는 form을 만드세요 --> 
 
-
+                            <form action="<%= p.id %>/c_create" method="POST">
+                                <textarea name=comment></textarea>
+                                <input type="submit"></input>
+                            </form>
 
                             <!-- 댓글을 작성할 수 있는 form을 만드세요 끝!-->
                             <hr>
                             <% # 리플 출력 시작%>
                             
-                            
+                            <% p.comments.each do |c| %>
+                              <%= c.content %>
+                              <br>
+                              
+                              <% end %>
+                              
+                        <% end %>
                             
                             <% # 리플 출력 끝 %>
                             

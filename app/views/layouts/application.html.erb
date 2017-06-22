@@ -35,7 +35,16 @@
                       </form>
                       <ul class="nav navbar-nav">
                         <li>
-                          <a href="#"><i class="glyphicon glyphicon-home"></i> 접속한 사람 이름뜨도록 해주세요</a>
+                          <a href="#"><i class="glyphicon glyphicon-home"></i> 
+                          <% if user_signed_in? %>
+                          <%=current_user.email %>
+                          <% else %>
+                          <%= link_to "/users/sign_in"  %>
+                          
+                          
+                          <% end %> 
+                          
+                          </a>
                         </li>
                         <li>
                           <a href="/users/sign_out" role="button" data-toggle="modal"><i class="glyphicon glyphicon-remove-sign"></i> 로그아웃</a>
